@@ -13,10 +13,10 @@ struct elf{
 	string machine;
 	string elfClass;
 	string endian;
-	string sonamei;
-  string origin;
-  vector<string> needed;
-  vector<string> aliases;
+	string soname;
+  	string origin;
+  	vector<string> needed;
+  	vector<string> aliases;
 }
 struct elemenELF{
   ELF info;
