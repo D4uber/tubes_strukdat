@@ -1,32 +1,31 @@
 #ifndef ELFLIST_H_INCLUDED
 #define ELFLIST_H_INCLUDED
 
-#include <cstddef>
-#include <cstdint>
-#include <string>
-#include <vector>
+#include <iostream>
 
 using namespace std;
 
 typedef struct elemenElf* adrElf;
 typedef struct elemenSym* adrSym;
 typedef struct elemenRel* adrRel;
+typedef struct elemenGeneric* adrGrc;
+typedef struct elemenDynsym* adrDynsym;
 
-struct Elfinfo {
-        uint64_t id;
-        uint64_t fileSize;
+struct Elfinfo{
+        int id;
+        int fileSize;
         string path;
         string machine;
         string elfClass;
         string endian;
         string soname;
         string origin;
-        vector<string> needed;
-        vector<string> aliases;
+        adrGrc needed;
+        adrGrc aliases;
 };
 
 struct DynsymEvidence{
-        uint32_t symbolIdx;
+        int symbolIdx;
         string rawName;
         string role;
         string type;
@@ -35,16 +34,27 @@ struct DynsymEvidence{
 };
 
 struct RelInfo{
-        uint64_t id;
+        int id;
         string roles;
         string origin;
-        vector<DynsymEvidence> evidence;
+        adrDynsym evidence;	
 };
 
 struct SymInfo{
-        uint64_t id;
+        int id;
         string name;
         string origin;
+};
+
+
+struct elemenGeneric{
+	string info;
+	adrGrc next;
+};
+
+struct elemenDynsym{
+	DynsymEvidence info;
+	adrDynsym next;
 };
 
 struct elemenElf {
@@ -64,25 +74,35 @@ struct elemenRel{
         adrRel next;
 };
 
+struct grcList{
+	adrGrc head;
+	int size;
+};
+
+struct dynsymList{
+	adrDynsym head;
+	int size;
+}:
+
 struct elfList {
         adrElf head;
         adrElf tail;
-        size_t size;
-        uint64_t nextId;
+        int size;
+        int nextId;
 };
 
 struct symList{
         adrSym head;
         adrSym tail;
-        size_t size;
-        uint64_t nextId;
+        int size;
+        int nextId;
 };
 
 struct relList{
         adrRel head;
         adrRel tail;
-        size_t size;
-        uint64_t nextId;
+        int size;
+        int nextId;
 };
 
 
